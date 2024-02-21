@@ -4,6 +4,6 @@ from .models import User, UserProfile
 
 # Register your models here.
 admin.site.register(User)
+#Registering model for User Setting
 admin.site.register(UserProfile)
 
-# Register your models here.
