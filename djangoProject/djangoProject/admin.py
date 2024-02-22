@@ -1,9 +1,11 @@
 from django.contrib import admin
-from django.db import models
-from .models import User, UserProfile
+from .models import User, UserProfile, Comment
 
 # Register your models here.
 admin.site.register(User)
-#Registering model for User Setting
+
+# Registering model for User Setting
 admin.site.register(UserProfile)
+
+admin.site.register(Comment)
 
