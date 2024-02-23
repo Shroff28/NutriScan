@@ -9,3 +9,8 @@ class Cuisine(models.Model):
 class Restaurant(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
+    cuisines = models.ManyToManyField(Cuisine)
+    address = models.CharField(max_length=255)
+    city = models.CharField(max_length=100)
+    state = models.CharField(max_length=100)
+    zip_code = models.CharField(max_length=20)
