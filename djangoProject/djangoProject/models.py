@@ -51,9 +51,10 @@ class Order:
     pass
 
 
-class Payments:
-    # TODO: Vinit
-    pass
+class Payments(models.Model):
+    payment_id = models.CharField(max_length=1024, primary_key=True)
+    order_id = models.ForeignKey(Order, on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now_add=True)
 
 
 class Comment(models.Model):
