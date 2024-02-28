@@ -21,4 +21,4 @@ def restaurant_list(request):
     filteredRestaurants = filteredRestaurants.objects.filter(cuisine__in=cuisine).all()
 
     # TODO return proper template
-    return '';
+    return ''
