@@ -6,6 +6,27 @@ class User(models.Model):
     password = models.CharField(max_length=100)
     email = models.EmailField(unique=True)
 
+class Cuisine(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+
+class Restaurant(models.Model):
+    name = models.CharField(max_length=255)
+    description = models.TextField(blank=True, null=True)
+    cuisines = models.ManyToManyField(Cuisine)
+    address = models.CharField(max_length=255)
+    city = models.CharField(max_length=100)
+    state = models.CharField(max_length=100)
+    zip_code = models.CharField(max_length=20)
+    phone_number = models.CharField(max_length=20)
+    website = models.URLField(blank=True, null=True)
+
+    def __str__(self):
+        return self.name
+
+
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -16,12 +37,6 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return self.user.username
-
-
-class Restaurant:
-    # TODO: Astha
-    pass
-
 
 class Menu:
     # TODO: Dhrumil
