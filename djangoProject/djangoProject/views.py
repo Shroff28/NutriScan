@@ -16,5 +16,9 @@ def restaurant_list(request):
     ratingValue = 1
     filteredRestaurants = filteredRestaurants.objects.filter(rating__gte=1)
 
+    # Filter according to Cuisine
+    cuisine = []
+    filteredRestaurants = filteredRestaurants.objects.filter(cuisine__in=cuisine).all()
+
     # TODO return proper template
     return '';
