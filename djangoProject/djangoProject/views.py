@@ -1,24 +1,20 @@
-from django.http import HttpResponse
-from django.shortcuts import get_object_or_404
-from django.views import View
-from django.shortcuts import render
+from .models import Restaurant
 
-from .models import User, UserProfile, Order, Restaurant, Cuisine, Menu, Payments, Review, Comment
 
 def restaurant_list(request):
     restaurants = Restaurant.objects.all()
 
-    searchValue = "test"
+    search_value = "test"
     # Filter according to name in search
-    filteredRestaurants = restaurants.objects.filter(name__icontains=searchValue)
+    filtered_restaurants = restaurants.objects.filter(name__icontains=search_value)
 
-    #Filter according to ratings
-    ratingValue = 1
-    filteredRestaurants = filteredRestaurants.objects.filter(rating__gte=1)
+    # Filter according to ratings
+    rating_value = 1
+    filtered_restaurants = filtered_restaurants.objects.filter(rating__gte=rating_value)
 
     # Filter according to Cuisine
     cuisine = []
-    filteredRestaurants = filteredRestaurants.objects.filter(cuisine__in=cuisine).all()
+    filtered_restaurants = filtered_restaurants.objects.filter(cuisine__in=cuisine).all()
 
     # TODO return proper template
     return ''

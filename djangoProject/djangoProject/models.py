@@ -1,4 +1,5 @@
 from django.db import models
+from djstripe.models import PaymentMethod
 
 
 class User(models.Model):
@@ -6,11 +7,13 @@ class User(models.Model):
     password = models.CharField(max_length=100)
     email = models.EmailField(unique=True)
 
+
 class Cuisine(models.Model):
     name = models.CharField(max_length=100)
 
     def __str__(self):
         return self.name
+
 
 class Restaurant(models.Model):
     name = models.CharField(max_length=255)
@@ -27,16 +30,17 @@ class Restaurant(models.Model):
         return self.name
 
 
-
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     bio = models.TextField(blank=True)
     favorite_food = models.CharField(max_length=100, blank=True)
     favorite_restaurant = models.CharField(max_length=100, blank=True)
+
     # additional fields for user settings will be updated as per requirements
 
     def __str__(self):
         return self.user.username
+
 
 class Menu:
     # TODO: Dhrumil
@@ -48,9 +52,14 @@ class Order:
     pass
 
 
-class Payments:
-    # TODO: Vinit
-    pass
+class Payments(models.Model):
+    payment_id = models.ForeignKey(PaymentMethod, on_delete=models.CASCADE)
+    order_id = models.ForeignKey('Order', on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+
+    def __str__(self):
+        return f"Payment #{self.pk} for Order #{self.order_id}"
 
 
 class Comment(models.Model):
