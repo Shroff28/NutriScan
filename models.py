@@ -28,4 +28,5 @@ class Restaurant(models.Model):
 
 class MenuItem(models.Model):
     name = models.CharField(max_length=255)
-    
+    description = models.TextField(blank=True, null=True)
+    price = models.DecimalField(max_digits=8, decimal_places=2)
