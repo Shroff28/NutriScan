@@ -28,4 +28,4 @@ class Restaurant(models.Model):
 
 class MenuItem(models.Model):
     name = models.CharField(max_length=255)
-    description = models.TextField(blank=True, null=True)
+    
