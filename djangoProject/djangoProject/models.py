@@ -64,16 +64,6 @@ class Payments(models.Model):
         return f"Payment #{self.pk} for Order #{self.order_id}"
 
 
-class Comment(models.Model):
-    # Short title of the comment
-    title = models.CharField(max_length=100)
-    # Detailed comment
-    details = models.TextField(blank=True)
-
-    def __str__(self):
-        return self.title
-
-
 class Review(models.Model):
     RATINGS_RANGE = (
         (1, 'Poor'),
@@ -86,13 +76,13 @@ class Review(models.Model):
     # timestamp to track when the review was given
     timestamp = models.DateTimeField(auto_now_add=True)
     # reference of the user who made the comment
-    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     # reference of the restaurant the review was given to
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
     # rating given to the restaurant
     rating = models.IntegerField(default=0, choices=RATINGS_RANGE)
     # comment associated with the review
-    comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
+    comment = models.TextField(blank=True, null=True, help_text='Add your comment')
 
     class Meta:
         ordering = ["-timestamp"]
