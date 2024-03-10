@@ -21,5 +21,5 @@ from .views import temp_review_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('ratings/', temp_review_view, name='ratings')
+    path('ratings/<int:restaurant_id>/', temp_review_view, name='ratings')
 ]
