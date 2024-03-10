@@ -6,14 +6,12 @@ from djangoProject.models import Review
 class ReviewForm(forms.ModelForm):
     class Meta:
         model = Review
-        fields = ['restaurant', 'rating', 'comment']
+        fields = ['rating', 'comment']
         widgets = {
-
-            'rating': forms.Select(),
-            'comment': forms.Textarea(attrs={'rows': 5})
+            'rating': forms.Select(attrs={'class': 'form-control'}),
+            'comment': forms.Textarea(attrs={'rows': 3, 'class': 'form-control'})
         }
         labels = {
-            'restaurant': 'Restaurant Name',
             'rating': 'Ratings',
             'comment': 'Comment',
         }

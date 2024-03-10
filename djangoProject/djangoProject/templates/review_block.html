@@ -2,10 +2,17 @@
 
 {% block body_block %}
     {% block review_form %}
-        <form action="{% url 'ratings' %}" method="post">
-            {% csrf_token %}
-            {{ review_from }}
-            <button type="submit">Submit</button>
-        </form>
+        <h2>Review {{ restaurant_name }}</h2>
+        {% if message %}
+            <p>{{ message }}</p>
+        {% else %}
+            <form action="{% url 'ratings' restaurant_id %}" method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    {{ review_from.as_p }}
+                </div>
+                <button class="btn btn-primary" type="submit">Submit</button>
+            </form>
+        {% endif %}
     {% endblock %}
 {% endblock %}
