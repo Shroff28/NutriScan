@@ -1,3 +1,5 @@
+import uuid
+
 from django.db import models
 from djstripe.models import PaymentMethod
 
@@ -47,7 +49,7 @@ class Menu:
     pass
 
 
-class Order:
+class Order(models.Model):
     # TODO: Jaydeep
     pass
 
