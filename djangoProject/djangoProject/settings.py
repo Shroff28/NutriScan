@@ -120,4 +120,3 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 DJSTRIPE_FOREIGN_KEY_TO_FIELD = "id"
-
