@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block body_block %}
+    {% block review_form %}
+        <form action="{% url 'ratings' %}" method="post">
+            {% csrf_token %}
+            {{ review_from }}
+            <button type="submit">Submit</button>
+        </form>
+    {% endblock %}
+{% endblock %}
