@@ -1,3 +1,6 @@
+{% extends 'base.html' %}
+
+{% block body_block %}
 <form method="get" action="{% url 'restaurant_list' %}">
     <label for="category">Category:</label>
     <select name="category">
@@ -22,3 +25,5 @@
 
     <button type="submit">Filter</button>
 </form>
+
+{% endblock %}
