@@ -17,6 +17,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from .views import temp_review_view
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('ratings/<int:restaurant_id>/', temp_review_view, name='ratings')
 ]
