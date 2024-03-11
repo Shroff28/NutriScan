@@ -1,19 +1,27 @@
 <!DOCTYPE html>
 {% load static %}
-<html>
+<html lang="en" class="h-100">
 <head>
-    <link rel="stylesheet" type="text/css" href="{% static 'carapp/style.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <title> Foodies - {% block title %} Welcome! {% endblock %}</title>
 </head>
-<body>
-<div>
-    {% block body_block %}
+<body class="d-flex flex-column h-100">
+<main class="flex-shrink-0">
+    <div class="container">
+        {% block body_block %}
 
-    {% endblock %}
-</div>
-<div>
-    Made with love by Group-5@uwindsor
-</div>
+
+        {% endblock %}
+    </div>
+</main>
+
+<footer class="footer mt-auto py-3 bg-light">
+    <div class="container">
+        <span class="text-muted">
+            Made with love by Group-5@uwindsor
+        </span>
+    </div>
+</footer>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
