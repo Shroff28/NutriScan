@@ -40,15 +40,15 @@ import uuid
 
 
 
-# class UserProfile(models.Model):
-#     user = models.OneToOneField(User, on_delete=models.CASCADE)
-#     bio = models.TextField(blank=True)
-#     favorite_food = models.CharField(max_length=100, blank=True)
-#     favorite_restaurant = models.CharField(max_length=100, blank=True)
-#     # additional fields for user settings will be updated as per requirements
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    bio = models.TextField(blank=True)
+    favorite_food = models.CharField(max_length=100, blank=True)
+    favorite_restaurant = models.CharField(max_length=100, blank=True)
+    # additional fields for user settings will be updated as per requirements
 
-#     def __str__(self):
-#         return self.user.username
+    def __str__(self):
+        return self.user.username
 
 # class MenuItem(models.Model):
 #     name = models.CharField(max_length=100)
@@ -84,14 +84,14 @@ import uuid
 #     pass
 
 
-# class Comment(models.Model):
-#     # Short title of the comment
-#     title = models.CharField(max_length=100)
-#     # Detailed comment
-#     details = models.TextField(blank=True)
+class Comment(models.Model):
+    # Short title of the comment
+    title = models.CharField(max_length=100)
+    # Detailed comment
+    details = models.TextField(blank=True)
 
-#     def __str__(self):
-#         return self.title
+    def __str__(self):
+        return self.title
 
 
 # class Review(models.Model):
@@ -131,43 +131,33 @@ class Category(models.Model):
         return self.name
 
 
-class Review(models.Model):
-    user = models.ForeignKey(User, on_delete = models.CASCADE, blank=True, null=True)
-    comment = models.TextField()
-    ratings = models.PositiveIntegerField(choices=[(i, i) for i in range(1, 6)])
 
-    def __str__(self):
-        return f"Review for {self.restaurant} by {self.user_name} ({self.rating} stars)"
+class User(models.Model):
+    username = models.CharField(max_length=50, unique=True)
+    password = models.CharField(max_length=100)
+    email = models.EmailField(unique=True)
+    # Add more fields as needed
+
 
 
 
 class MenuItem(models.Model):
+    name = models.CharField(max_length=255)
+    description = models.TextField(blank=True, null=True)
+    price = models.DecimalField(max_digits=8, decimal_places=2)
+
+
+class Restaurant(models.Model):
     name = models.CharField(max_length=200)
-    description = models.TextField()
-    price = models.DecimalField(max_digits=6, decimal_places=2)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    review = models.ForeignKey(Review, on_delete = models.CASCADE, blank=True, null=True)
-
-
-    def __str__(self):
-        return self.name
-    
-
-
-class Restuarant(models.Model):
-
-    name = models.CharField(max_length=200)
-    description = models.TextField()
+    description = models.TextField(blank=True, null=True)
     address = models.CharField(max_length=255)
     phone_number = models.CharField(max_length=15)
     website = models.URLField(blank=True, null=True)
 
     menus = models.ManyToManyField(MenuItem, null=True, blank=True)
 
-
     def __str__(self):
         return self.name
-    
 
 class Order(models.Model):
 
@@ -177,4 +167,12 @@ class Order(models.Model):
     def __str__(self):
         return f"{self.order_id}"
 
+
+class Review(models.Model):
+    user = models.ForeignKey(User, on_delete = models.CASCADE, blank=True, null=True)
+    comment = models.TextField()
+    ratings = models.PositiveIntegerField(choices=[(i, i) for i in range(1, 6)], default=1)
+
+    def __str__(self):
+        return f"Review for {self.restaurant} by {self.user_name} ({self.rating} stars)"
 
