@@ -164,5 +164,5 @@ class Review(models.Model):
         ordering = ["-timestamp"]
 
     def __str__(self):
-        return f"Review for {self.restaurant} by {self.user.username} ({self.rating} stars)"
+        return f"Review for {self.restaurant} by {self.user.username} ({self.ratings} stars)"
 
