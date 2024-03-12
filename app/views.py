@@ -2,7 +2,10 @@ from .forms import ReviewForm
 from .models import Restaurant, User
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
-
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from .models import UserProfile
 
 def restaurant_list(request):
     restaurants = Restaurant.objects.all()
@@ -38,3 +41,10 @@ def temp_review_view(request, restaurant_id):
             return render(request, 'review_block.html', {'restaurant_id': restaurant_id, 'message': 'Review Submitted Successfully'})
     else:
         return render(request, 'review_block.html', {'review_from': form, 'restaurant_id': restaurant_id, 'restaurant_name': restaurant.name, 'message': ''})
+
+
+@login_required
+def user_settings(request):
+    user = request.user
+    user_profile = UserProfile.objects.get_or_create(user=user)[0]
+    return render(request, 'user_settings.html', {'user': user, 'user_profile': user_profile})
