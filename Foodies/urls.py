@@ -18,8 +18,10 @@ from django.contrib import admin
 from django.urls import path
 
 from app.views import temp_review_view
+from app.views import user_settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('ratings/<int:restaurant_id>/', temp_review_view, name='ratings')
+    path('ratings/<int:restaurant_id>/', temp_review_view, name='ratings'),
+
 ]
