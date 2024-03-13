@@ -22,6 +22,5 @@ from app.views import user_settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('ratings/<int:restaurant_id>/', temp_review_view, name='ratings'),
-
+    path('ratings/<int:restaurant_id>/', temp_review_view, name='ratings')
 ]
