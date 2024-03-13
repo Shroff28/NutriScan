@@ -1,10 +1,11 @@
-from .forms import ReviewForm
+from .forms import ReviewForm , UserProfileForm
 from .models import Restaurant, User
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.contrib.auth.forms import PasswordChangeForm
 from .models import UserProfile
 
 def restaurant_list(request):
@@ -47,4 +48,16 @@ def temp_review_view(request, restaurant_id):
 def user_settings(request):
     user = request.user
     user_profile = UserProfile.objects.get_or_create(user=user)[0]
-    return render(request, 'user_settings.html', {'user': user, 'user_profile': user_profile})
+    if request.method == 'POST':
+        password_form = PasswordChangeForm(user, request.POST)
+        profile_form = UserProfileForm(request.POST, request.FILES, instance=user_profile)
+
+        if password_form.is_valid() and profile_form.is_valid():
+            password_form.save()
+            profile_form.save()
+            return redirect('user_settings')
+    else:
+        password_form = PasswordChangeForm(user)
+        profile_form = UserProfileForm(instance=user_profile)
+
+    return render(request, 'user_settings.html',{'password_form': password_form, 'profile_form': profile_form, 'user_profile': user_profile})

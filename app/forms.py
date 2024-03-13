@@ -1,6 +1,7 @@
 from django import forms
 
 from app.models import Review
+from app.models import UserProfile
 
 
 class ReviewForm(forms.ModelForm):
@@ -16,3 +17,7 @@ class ReviewForm(forms.ModelForm):
             'comment': 'Comment',
         }
 
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ('profile_picture',)
