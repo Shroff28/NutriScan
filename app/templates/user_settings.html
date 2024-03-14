@@ -1,15 +1,18 @@
 {% extends 'base.html' %}
 
-{% block content %}
+{% block body_block %}
 <h1>User Settings</h1>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ user_form.as_p }}
+    {{ profile_form.as_p }}
+    <button type="submit">Save Changes</button>
+</form>
+
+<h2>Change Password</h2>
 <form method="post">
     {% csrf_token %}
-    <label for="bio">Bio:</label>
-    <textarea name="bio" id="bio" rows="4" cols="50">{{ user_profile.bio }}</textarea><br>
-    <label for="favorite_food">Favorite Cuisine:</label>
-    <input type="text" name="favorite_food" id="favorite_food" value="{{ user_profile.favorite_food }}"><br>
-    <label for="favorite_restaurant">Favorite Restaurant:</label>
-    <input type="text" name="favorite_restaurant" id="favorite_restaurant" value="{{ user_profile.favorite_restaurant }}"><br>
-    <button type="submit">Save Changes</button>
+    {{ form.as_p }}
+    <button type="submit">Change Password</button>
 </form>
 {% endblock %}
