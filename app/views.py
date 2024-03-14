@@ -44,9 +44,9 @@ def temp_review_view(request, restaurant_id):
         return render(request, 'review_block.html', {'review_from': form, 'restaurant_id': restaurant_id, 'restaurant_name': restaurant.name, 'message': ''})
 
 
-@login_required
+
 def user_settings(request):
-    user = request.user
+    user = 1
     user_profile = UserProfile.objects.get_or_create(user=user)[0]
     if request.method == 'POST':
         password_form = PasswordChangeForm(user, request.POST)
