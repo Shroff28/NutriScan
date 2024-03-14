@@ -94,36 +94,6 @@ class Comment(models.Model):
         return self.title
 
 
-# class Review(models.Model):
-#     RATINGS_RANGE = (
-#         (1, 'Poor'),
-#         (2, 'Bad'),
-#         (3, 'Mediocre'),
-#         (4, 'Good'),
-#         (5, 'Excellent'),
-#     )
-
-#     # timestamp to track when the review was given
-#     timestamp = models.DateTimeField(auto_now_add=True)
-#     # reference of the user who made the comment
-#     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
-#     # reference of the restaurant the review was given to
-#     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
-#     # rating given to the restaurant
-#     rating = models.IntegerField(default=0, choices=RATINGS_RANGE)
-#     # comment associated with the review
-#     comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
-
-#     class Meta:
-#         ordering = ["-timestamp"]
-
-
-
-
-# ============================================================
-# New Fields
-# ============================================================
-
 class Category(models.Model):
     name = models.CharField(max_length=100)
 
@@ -160,7 +130,6 @@ class Restaurant(models.Model):
         return self.name
 
 class Order(models.Model):
-
     order_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.ForeignKey(User, on_delete = models.CASCADE, blank=True, null=True)
 
@@ -169,10 +138,31 @@ class Order(models.Model):
 
 
 class Review(models.Model):
-    user = models.ForeignKey(User, on_delete = models.CASCADE, blank=True, null=True)
-    comment = models.TextField()
-    ratings = models.PositiveIntegerField(choices=[(i, i) for i in range(1, 6)], default=1)
+    RATINGS_RANGE = (
+        (1, 'Poor'),
+        (2, 'Bad'),
+        (3, 'Mediocre'),
+        (4, 'Good'),
+        (5, 'Excellent'),
+    )
+
+    # timestamp to track when the review was given
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    # reference of the restaurant the review was given to
+    restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE, null=False)
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
+
+    # rating given to the restaurant
+    ratings = models.IntegerField(default=0, choices=RATINGS_RANGE)
+
+    # comment associated with the review
+    comment = models.TextField(blank=True, null=True, help_text='Add your comment')
+
+    class Meta:
+        ordering = ["-timestamp"]
 
     def __str__(self):
-        return f"Review for {self.restaurant} by {self.user_name} ({self.rating} stars)"
+        return f"Review for {self.restaurant} by {self.user.username} ({self.ratings} stars)"
 
