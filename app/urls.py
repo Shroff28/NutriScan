@@ -16,9 +16,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from .views import sign_up
+from .views import login
 
 from .views import temp_review_view
 
 urlpatterns = [
-    path('ratings/<int:restaurant_id>/', temp_review_view, name='ratings')
+    path('ratings/<int:restaurant_id>/', temp_review_view, name='ratings'),
+    path('', sign_up, name='sign_up'),
+    path('login/', login, name='login')
 ]

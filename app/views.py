@@ -1,12 +1,13 @@
 from .forms import ReviewForm
 from .models import Restaurant, User
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from .models import UserProfile
-
+from .forms import SignUpForm
+from .forms import LoginForm
 def restaurant_list(request):
     restaurants = Restaurant.objects.all()
 
@@ -48,3 +49,29 @@ def user_settings(request):
     user = request.user
     user_profile = UserProfile.objects.get_or_create(user=user)[0]
     return render(request, 'user_settings.html', {'user': user, 'user_profile': user_profile})
+
+
+
+
+def sign_up(request):
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('login')  # Redirect to login page after successful sign-up
+    else:
+        form = SignUpForm()
+    return render(request, 'sign_up.html', {'form': form})
+
+
+
+def login(request):
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            # Process login data
+            # Example: Check credentials and log the user in
+            return redirect('home')  # Redirect to home page after successful login
+    else:
+        form = LoginForm()
+    return render(request, 'sign_in.html', {'form': form})
