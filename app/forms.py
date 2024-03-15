@@ -21,4 +21,4 @@ class UserProfileForm(forms.ModelForm):
     profile_picture = forms.ImageField(required=False)
     class Meta:
         model = UserProfile
-        fields = ('bio', 'favorite_food', 'favorite_restaurant','profile_picture',)
+        fields = ('Name','profile_picture','e-mail','bio', 'favorite_food', 'favorite_restaurant',)
