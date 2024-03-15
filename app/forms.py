@@ -17,8 +17,10 @@ class ReviewForm(forms.ModelForm):
             'comment': 'Comment',
         }
 
+
 class UserProfileForm(forms.ModelForm):
     profile_picture = forms.ImageField(required=False)
+
     class Meta:
         model = UserProfile
-        fields = ('bio', 'favorite_food', 'favorite_restaurant','profile_picture',)
+        fields = ('bio', 'favorite_food', 'favorite_restaurant', 'profile_picture',)
