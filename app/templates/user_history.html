@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+<!DOCTYPE html>
+<html lang="en">
+{% block body_block %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>User History</title>
+    <style>
+        /* Basic styling for navigation bar */
+        nav {
+            background-color: #ffffff
+        ;
+            overflow: hidden;
+        }
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+        nav ul li {
+            float: left;
+        }
+        nav ul li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+        nav ul li a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+        /* Styling for user history content */
+        .container {
+            margin: 20px;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <ul></ul>
+            <li><a href="{% url 'Settings' %}">Settings</a></li>
+        </ul>
+    </nav>
+    <hr>
+    <div class="container">
+    <h1>User History</h1>
+    {% if order_details %}
+        <ul>
+            {% for restaurant_name, order_id in order_details %}
+                <li>Restaurant: {{ restaurant_name }} - Order ID: {{ order_id }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No orders found.</p>
+    {% endif %}
+    </div>
+</body>
+{% endblock %}
+</html>

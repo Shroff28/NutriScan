@@ -1,5 +1,5 @@
 from .forms import ReviewForm , UserProfileForm
-from .models import Restaurant, User
+from .models import Restaurant, User, Order
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
@@ -44,7 +44,7 @@ def temp_review_view(request, restaurant_id):
         return render(request, 'review_block.html', {'review_from': form, 'restaurant_id': restaurant_id, 'restaurant_name': restaurant.name, 'message': ''})
 
 
-
+@login_required(login_url='/accounts/login/')
 def user_settings(request):
     user = 1
     user_profile = UserProfile.objects.get_or_create(user=user)[0]
@@ -61,3 +61,25 @@ def user_settings(request):
         profile_form = UserProfileForm(instance=user_profile)
 
     return render(request, 'user_settings.html',{'password_form': password_form, 'profile_form': profile_form, 'user_profile': user_profile})
+
+def user_history(request):
+    # Get the current user
+    user = 1
+
+    # Query all orders made by the current user
+    orders = Order.objects.filter(user=user)
+
+    # Create a list to hold order details (restaurant name and order ID)
+    order_details = []
+
+    # Iterate through each order to extract restaurant name and order ID
+    for order in orders:
+        # Get the restaurant name for the order
+        restaurant_name = order.restaurant.name
+        # Get the order ID
+        order_id = order.order_id
+        # Append the details to the list
+        order_details.append((restaurant_name, order_id))
+
+    # Pass the order details to the template for rendering
+    return render(request, 'user_history.html', {'order_details': order_details})
