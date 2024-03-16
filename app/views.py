@@ -62,24 +62,37 @@ def user_settings(request):
 
     return render(request, 'user_settings.html',{'password_form': password_form, 'profile_form': profile_form, 'user_profile': user_profile})
 
+# Define a class to hold static order data
+class StaticOrder:
+    def __init__(self, order_id, restaurant_name, item_name, cuisine_price, cuisine_quantity,totalprice):
+        self.order_id = order_id
+        self.restaurant_name = restaurant_name
+        self.item_name = item_name
+        self.cuisine_price = cuisine_price
+        self.quantity = cuisine_quantity
+        self.totalprice = totalprice
+
 def user_history(request):
     # Get the current user
-    user = 1
+    user_id = 1
 
-    # Query all orders made by the current user
-    orders = Order.objects.filter(user=user)
+    # Static order data
+    static_orders = [
+        StaticOrder(order_id=1, restaurant_name='Restaurant A', item_name='Italian',cuisine_price='$20',cuisine_quantity='1',totalprice='40'),
+        StaticOrder(order_id=2, restaurant_name='Restaurant B', item_name='Mexican',cuisine_price='$50',cuisine_quantity='2',totalprice='100'),
+        StaticOrder(order_id=3, restaurant_name='Restaurant C', item_name='Indian',cuisine_price='$15',cuisine_quantity='1',totalprice='15'),
+        # Add more static orders as needed
+    ]
+
+    # Filter orders made by the current user
+    user_orders = [order for order in static_orders]
 
     # Create a list to hold order details (restaurant name and order ID)
     order_details = []
 
     # Iterate through each order to extract restaurant name and order ID
-    for order in orders:
-        # Get the restaurant name for the order
-        restaurant_name = order.restaurant.name
-        # Get the order ID
-        order_id = order.order_id
-        # Append the details to the list
-        order_details.append((restaurant_name, order_id))
+    for order in user_orders:
+        order_details.append((order.order_id, order.restaurant_name, order.item_name,order.cuisine_price,order.quantity,order.totalprice))
 
     # Pass the order details to the template for rendering
     return render(request, 'user_history.html', {'order_details': order_details})
