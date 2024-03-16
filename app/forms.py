@@ -1,8 +1,7 @@
 from django import forms
 
 from app.models import Review
-from app.models import UserProfile
-
+from app.models import UserProfile, Restaurant
 
 class ReviewForm(forms.ModelForm):
     class Meta:
@@ -23,4 +22,13 @@ class UserProfileForm(forms.ModelForm):
 
     class Meta:
         model = UserProfile
-        fields = ('bio', 'favorite_food', 'favorite_restaurant', 'profile_picture',)
+        fields = ('bio', 'favorite_food', 'favorite_restaurant', 'profile_picture')
+
+class FilterForm(forms.ModelForm):
+
+    class Meta:
+        model = Restaurant
+        fields = ['type']
+        widgets = {
+            'type': forms.Select(attrs={'class': 'form'})
+        }

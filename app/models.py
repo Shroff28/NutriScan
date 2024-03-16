@@ -46,12 +46,16 @@ class MenuItem(models.Model):
 
 
 class Restaurant(models.Model):
+    type_choices=[('1', 'Indian'),
+                  ('2', 'Mexican'),
+                  ('3', 'Italian')]
+
     name = models.CharField(max_length=200)
     description = models.TextField(blank=True, null=True)
     address = models.CharField(max_length=255)
     phone_number = models.CharField(max_length=15)
     website = models.URLField(blank=True, null=True)
-
+    type = models.CharField(choices=type_choices, default='1')
     menus = models.ManyToManyField(MenuItem, null=True, blank=True)
 
     def __str__(self):
