@@ -61,3 +61,7 @@ def user_settings(request):
         profile_form = UserProfileForm(instance=user_profile)
 
     return render(request, 'user_settings.html',{'password_form': password_form, 'profile_form': profile_form, 'user_profile': user_profile})
+
+
+def payment_successful(request):
+    return render(request, 'payment_sucessful.html')

@@ -38,3 +38,23 @@ body {
 .navigation i{
     font-size: 25px;
 }
+
+.payment-image {
+    margin: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    flex-direction: column;
+}
+
+.payment-image img {
+    width: 40vw;
+}
+
+.payment-image h2 {
+    margin-bottom: 10px;
+    text-align: center;
+    color: #81bb81;
+}
