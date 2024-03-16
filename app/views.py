@@ -86,5 +86,5 @@ def login(request):
         form = LoginForm()
     return render(request, 'sign_in.html', {'form': form})
 
-def tempNavbar(request):
-    return render(request, 'navbar.html')
+def payment_successful(request):
+    return render(request, 'payment_sucessful.html')
