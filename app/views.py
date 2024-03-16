@@ -7,7 +7,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import PasswordChangeForm
 from .models import UserProfile
-
+from .forms import SignUpForm
+from .forms import LoginForm
 def restaurant_list(request):
     restaurants = Restaurant.objects.all()
 
@@ -68,7 +69,7 @@ class StaticOrder:
         self.order_id = order_id
         self.restaurant_name = restaurant_name
         self.item_name = item_name
-        self.cuisine_price = cuisine_price
+        self.cuisine_price = cuisine_prices
         self.quantity = cuisine_quantity
         self.totalprice = totalprice
 
@@ -96,3 +97,28 @@ def user_history(request):
 
     # Pass the order details to the template for rendering
     return render(request, 'user_history.html', {'order_details': order_details})
+def sign_up(request):
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('login')  # Redirect to login page after successful sign-up
+    else:
+        form = SignUpForm()
+    return render(request, 'sign_up.html', {'form': form})
+
+
+
+def login(request):
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            # Process login data
+            # Example: Check credentials and log the user in
+            return redirect('home')  # Redirect to home page after successful login
+    else:
+        form = LoginForm()
+    return render(request, 'sign_in.html', {'form': form})
+
+def payment_successful(request):
+    return render(request, 'payment_sucessful.html')

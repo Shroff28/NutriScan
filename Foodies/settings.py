@@ -36,8 +36,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'app.apps.AppsConfig',
+    'fontawesomefree',
 ]
 
+DJANGO_ICONS = {
+    "ICONS": {
+        "cart": {"name": "fas fa-shopping-cart"},
+    },
+}
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

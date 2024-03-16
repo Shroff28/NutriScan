@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
-
+{% block navigation %}
+    {% include 'navbar.html' %}
+{% endblock %}
 {% block body_block %}
     {% block review_form %}
         <h2>Review {{ restaurant_name }}</h2>
