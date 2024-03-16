@@ -64,4 +64,4 @@ def user_settings(request):
 
 
 def tempNavbar(request):
-    return render(request, 'navbar.html')
+    return render(request, 'navbar.html', {'status': 'signedIn'})
