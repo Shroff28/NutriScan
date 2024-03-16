@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.db import models
 from django.contrib.auth.models import User
 import uuid
@@ -32,11 +34,12 @@ class Category(models.Model):
         return self.name
 
 
-class User(models.Model):
-    username = models.CharField(max_length=50, unique=True)
-    password = models.CharField(max_length=100)
-    email = models.EmailField(unique=True)
-    # Add more fields as needed
+
+class Customer(User):
+    date_of_birth = models.DateField(null=True, blank=True, default=None)
+    contact_number = models.CharField(max_length=15, null=True, blank=True, default=None)
+    def __str__(self):
+       return self.username
 
 
 class MenuItem(models.Model):
