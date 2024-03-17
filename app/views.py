@@ -69,7 +69,7 @@ class StaticOrder:
         self.order_id = order_id
         self.restaurant_name = restaurant_name
         self.item_name = item_name
-        self.cuisine_price = cuisine_prices
+        self.cuisine_price = cuisine_price
         self.quantity = cuisine_quantity
         self.totalprice = totalprice
 
@@ -82,6 +82,7 @@ def user_history(request):
         StaticOrder(order_id=1, restaurant_name='Restaurant A', item_name='Italian',cuisine_price='$20',cuisine_quantity='1',totalprice='40'),
         StaticOrder(order_id=2, restaurant_name='Restaurant B', item_name='Mexican',cuisine_price='$50',cuisine_quantity='2',totalprice='100'),
         StaticOrder(order_id=3, restaurant_name='Restaurant C', item_name='Indian',cuisine_price='$15',cuisine_quantity='1',totalprice='15'),
+        StaticOrder(order_id=4, restaurant_name='Restaurant C', item_name='Indian', cuisine_price='$15', cuisine_quantity='1', totalprice='15'),
         # Add more static orders as needed
     ]
 
