@@ -104,17 +104,17 @@ def home(request):
 def ask_money(request):
     # What you want the button to do.
     paypal_dict = {
-        "business": "chauha59@uwindsor.ca",
+        "business": "sb-pkdqf30042076@business.example.com",
         "amount": "1.00",
         "item_name": "SOME ITEM",
         "invoice": "ORDER ID",
         "notify_url": request.build_absolute_uri(reverse('paypal-ipn')),
         "return": request.build_absolute_uri(reverse('payment_successful')),
+        # TODO: Add cancel return URL
         "cancel_return": request.build_absolute_uri(reverse('payment_successful')),
         "custom": "premium_plan",  # Custom command to correlate to some function later (optional)
     }
 
     # Create the instance.
     form = PayPalPaymentsForm(initial=paypal_dict)
-    context = {"form": form}
-    return render(request, "payments.html", context)
+    return render(request, "payments.html", {"form": form})
