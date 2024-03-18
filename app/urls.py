@@ -14,7 +14,8 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.urls import path, include
+from django.urls import include
+from django.urls import path
 
 from .views import *
 
@@ -29,4 +30,6 @@ urlpatterns = [
     path('paypal/', include("paypal.standard.ipn.urls")),
     path('payment_successful/', payment_successful, name='payment_successful'),
     path('payment/', ask_money, name='payment'),
+    path('payment_successful/', payment_successful, name='payment_successful'),
+    path('temp_filter/', filter_temp, name='temp_filter'),
 ]

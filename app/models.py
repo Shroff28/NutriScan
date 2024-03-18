@@ -1,8 +1,7 @@
-from datetime import datetime
-
-from django.db import models
-from django.contrib.auth.models import User
 import uuid
+
+from django.contrib.auth.models import User
+from django.db import models
 
 
 class UserProfile(models.Model):
@@ -34,12 +33,12 @@ class Category(models.Model):
         return self.name
 
 
-
 class Customer(User):
     date_of_birth = models.DateField(null=True, blank=True, default=None)
     contact_number = models.CharField(max_length=15, null=True, blank=True, default=None)
+
     def __str__(self):
-       return self.username
+        return self.username
 
 
 class MenuItem(models.Model):
@@ -49,12 +48,16 @@ class MenuItem(models.Model):
 
 
 class Restaurant(models.Model):
+    type_choices = [('1', 'Indian'),
+                    ('2', 'Mexican'),
+                    ('3', 'Italian')]
+
     name = models.CharField(max_length=200)
     description = models.TextField(blank=True, null=True)
     address = models.CharField(max_length=255)
     phone_number = models.CharField(max_length=15)
     website = models.URLField(blank=True, null=True)
-
+    type = models.CharField(choices=type_choices, default='1', max_length=2)
     menus = models.ManyToManyField(MenuItem, null=True, blank=True)
 
     def __str__(self):
@@ -89,7 +92,6 @@ class Review(models.Model):
     # rating given to the restaurant
     ratings = models.IntegerField(default=0, choices=RATINGS_RANGE)
 
-    # comment associated with the review
     comment = models.TextField(blank=True, null=True, help_text='Add your comment')
 
     class Meta:
