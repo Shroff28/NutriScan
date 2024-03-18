@@ -12,7 +12,7 @@ from django.shortcuts import render
 from django.urls.base import reverse
 from paypal.standard.forms import PayPalPaymentsForm
 
-from .forms import LoginForm
+from .forms import LoginForm, FilterForm
 from .forms import ReviewForm, UserProfileForm
 from .forms import SignUpForm
 from .models import Restaurant
@@ -104,7 +104,7 @@ def payment_successful(request):
     return render(request, 'payment_sucessful.html')
 
 def filter_temp(req):
-    return render(req, 'filters.html')
+    return render(req, 'filters.html', {'form': FilterForm})
 
 def home(request):
     return render(request, 'home.html')

@@ -1,7 +1,6 @@
 body {
     background-color: white;
     color: wheat;
-    background: black;
 }
 
 .navigation {
@@ -12,7 +11,7 @@ body {
     font-size: 30px;
     color: red;
     align-items: center;
-    box-shadow: 0 4px 2px -2px gray;
+    box-shadow: 0 4px 2px -2px red;
 }
 
 .nav-left {
@@ -57,4 +56,84 @@ body {
     margin-bottom: 10px;
     text-align: center;
     color: #81bb81;
+}
+
+.filters {
+    padding: 10px;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+}
+
+.filters-form {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.filters-form p {
+    display: inline;
+    margin: 0;
+}
+
+.filters-form .form-select {
+    width: 200px !important;
+    border: 2px solid red !important;
+    border-radius: 10px !important;
+    color: red;
+}
+
+.filters-form .form-control {
+    width: 200px !important;
+    border: 2px solid red !important;
+    border-radius: 10px !important;
+}
+
+.filters-form {
+    color: red;
+    font-weight: 500;
+    font-size: 18px;
+}
+
+
+.form-select, .form-control {
+    display: inline !important;
+    width: fit-content !important;
+}
+
+.btn-primary {
+    background-color: red !important;
+    padding: 10px 20px !important;
+    border: red !important;
+}
+
+.filters-form .form-select select {
+  background: transparent;
+  width: 170px;
+  padding: 5px;
+  border: 0;
+  border-radius: 0;
+  height: 35px;
+}
+
+.slidecontainer {
+  width: 100%; /* Width of the outside container */
+}
+/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+.form-range::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Override default look */
+  appearance: none;
+  width: 25px; /* Set a specific slider handle width */
+  height: 25px; /* Slider handle height */
+  background: red !important; /* Green background */
+  cursor: pointer; /* Cursor on hover */
+}
+
+.slider::-moz-range-thumb {
+  width: 25px; /* Set a specific slider handle width */
+  height: 25px; /* Slider handle height */
+  background: #04AA6D; /* Green background */
+  cursor: pointer; /* Cursor on hover */
 }

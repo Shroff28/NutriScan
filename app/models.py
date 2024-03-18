@@ -93,7 +93,6 @@ class Review(models.Model):
     # rating given to the restaurant
     ratings = models.IntegerField(default=0, choices=RATINGS_RANGE)
 
-    # comment associated with the review
     comment = models.TextField(blank=True, null=True, help_text='Add your comment')
 
     class Meta:

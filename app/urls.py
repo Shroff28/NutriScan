@@ -17,6 +17,8 @@ Including another URLconf
 from django.urls import path, include
 
 from .views import temp_review_view, user_settings, login, sign_up, payment_successful, home, ask_money
+from django.urls import path
+from .views import temp_review_view, user_settings, payment_successful, filter_temp
 
 urlpatterns = [
     path('ratings/<int:restaurant_id>/', temp_review_view, name='ratings'),
@@ -27,4 +29,6 @@ urlpatterns = [
     path('paypal/', include("paypal.standard.ipn.urls")),
     path('payment_successful/', payment_successful, name='payment_successful'),
     path('payment/', ask_money, name='payment'),
+    path('payment_successful/', payment_successful, name='payment_successful'),
+    path('temp_filter/', filter_temp, name='temp_filter' ),
 ]
