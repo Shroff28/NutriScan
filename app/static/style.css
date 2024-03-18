@@ -34,7 +34,7 @@ body {
     font-style: normal;
 }
 
-.navigation i{
+.navigation i {
     font-size: 25px;
 }
 
@@ -110,10 +110,10 @@ body {
 }
 
 .filters-form .form-select select {
-  background: transparent;
-  width: 170px;
-  padding: 5px;
-  border: 0;
-  border-radius: 0;
-  height: 35px;
+    background: transparent;
+    width: 170px;
+    padding: 5px;
+    border: 0;
+    border-radius: 0;
+    height: 35px;
 }

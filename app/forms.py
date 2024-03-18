@@ -1,4 +1,5 @@
 from django import forms
+
 from app.models import Review
 from app.models import UserProfile, Restaurant, Customer
 
@@ -26,10 +27,10 @@ class SignUpForm(forms.ModelForm):
             'date_of_birth': forms.DateInput(attrs={'type': 'date'}),
         }
 
+
 class LoginForm(forms.Form):
     email = forms.EmailField(label="Email")
     password = forms.CharField(label="Password", widget=forms.PasswordInput)
-
 
 
 class UserProfileForm(forms.ModelForm):
@@ -38,6 +39,7 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ('bio', 'favorite_food', 'favorite_restaurant', 'profile_picture')
+
 
 # class FilterForm(forms.ModelForm):
 #     class Meta:
@@ -58,5 +60,5 @@ class FilterForm(forms.Form):
     Search = forms.CharField(label='Search', widget=forms.TextInput(attrs={'class': 'form-control'}))
     Cuisine = forms.ChoiceField(choices=choices, widget=forms.Select(attrs={'class': 'form-select'}))
     ratings_choice = [('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')]
-    Ratings = forms.ChoiceField(widget=forms.NumberInput(attrs={'type': 'range', 'class': 'form-range', 'min': '1', 'max': '5'}))
-
+    Ratings = forms.ChoiceField(
+        widget=forms.NumberInput(attrs={'type': 'range', 'class': 'form-range', 'min': '1', 'max': '5'}))

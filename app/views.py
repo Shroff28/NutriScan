@@ -1,10 +1,3 @@
-from .forms import ReviewForm, UserProfileForm
-from .models import Restaurant, User
-from django.shortcuts import render, get_object_or_404, redirect
-from django.http import HttpResponseRedirect
-from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, redirect
@@ -103,8 +96,10 @@ def login(request):
 def payment_successful(request):
     return render(request, 'payment_sucessful.html')
 
+
 def filter_temp(req):
     return render(req, 'filters.html', {'form': FilterForm})
+
 
 def home(request):
     return render(request, 'home.html')
