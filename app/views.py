@@ -6,6 +6,16 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth.models import User
+from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import render
+from django.urls.base import reverse
+from paypal.standard.forms import PayPalPaymentsForm
+
+from .forms import LoginForm
+from .forms import ReviewForm, UserProfileForm
+from .forms import SignUpForm
+from .models import Restaurant
 from .models import UserProfile
 
 
@@ -67,8 +77,53 @@ def user_settings(request):
                   {'password_form': password_form, 'profile_form': profile_form, 'user_profile': user_profile})
 
 
+def sign_up(request):
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('login')  # Redirect to login page after successful sign-up
+    else:
+        form = SignUpForm()
+    return render(request, 'sign_up.html', {'form': form})
+
+
+def login(request):
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            # Process login data
+            # Example: Check credentials and log the user in
+            return redirect('home')  # Redirect to home page after successful login
+    else:
+        form = LoginForm()
+    return render(request, 'sign_in.html', {'form': form})
+
+
 def payment_successful(request):
     return render(request, 'payment_sucessful.html')
 
 def filter_temp(req):
     return render(req, 'filters.html')
+
+def home(request):
+    return render(request, 'home.html')
+
+
+def ask_money(request):
+    # What you want the button to do.
+    paypal_dict = {
+        "business": "sb-pkdqf30042076@business.example.com",
+        "amount": "1.00",
+        "item_name": "SOME ITEM",
+        "invoice": "ORDER ID",
+        "notify_url": request.build_absolute_uri(reverse('paypal-ipn')),
+        "return": request.build_absolute_uri(reverse('payment_successful')),
+        # TODO: Add cancel return URL
+        "cancel_return": request.build_absolute_uri(reverse('payment_successful')),
+        "custom": "premium_plan",  # Custom command to correlate to some function later (optional)
+    }
+
+    # Create the instance.
+    form = PayPalPaymentsForm(initial=paypal_dict)
+    return render(request, "payments.html", {"form": form})

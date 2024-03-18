@@ -23,6 +23,7 @@ SECRET_KEY = 'django-insecure-quo3^#z%e$ljrr(6ytt@o$#*5(vy#cwx+-x_jt26m=+y%h-0ft
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+PAYPAL_TEST = True
 
 ALLOWED_HOSTS = []
 
@@ -35,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'paypal.standard.ipn',
     'app.apps.AppsConfig',
     'fontawesomefree',
 ]
@@ -123,5 +125,3 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-DJSTRIPE_FOREIGN_KEY_TO_FIELD = "id"

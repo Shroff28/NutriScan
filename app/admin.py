@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import *
-from .models import User, UserProfile, Review, Restaurant
+from .models import Customer, UserProfile, Review, Restaurant
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
@@ -12,7 +12,7 @@ class OrderAdmin(admin.ModelAdmin):
 
 
 # Register your models here.
-admin.site.register(User)
+admin.site.register(Customer)
 
 # Registering model for User Setting
 admin.site.register(UserProfile)
