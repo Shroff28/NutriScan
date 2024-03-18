@@ -1,4 +1,4 @@
-from .forms import ReviewForm , UserProfileForm
+from .forms import ReviewForm, UserProfileForm
 from .models import Restaurant, User
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponseRedirect
@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import PasswordChangeForm
 from .models import UserProfile
+
 
 def restaurant_list(request):
     restaurants = Restaurant.objects.all()
@@ -39,10 +40,12 @@ def temp_review_view(request, restaurant_id):
             review.restaurant = restaurant
             review.user = user
             review.save()
-            return render(request, 'review_block.html', {'restaurant_id': restaurant_id, 'message': 'Review Submitted Successfully'})
+            return render(request, 'review_block.html',
+                          {'restaurant_id': restaurant_id, 'message': 'Review Submitted Successfully'})
     else:
-        return render(request, 'review_block.html', {'review_from': form, 'restaurant_id': restaurant_id, 'restaurant_name': restaurant.name, 'message': ''})
-
+        return render(request, 'review_block.html',
+                      {'review_from': form, 'restaurant_id': restaurant_id, 'restaurant_name': restaurant.name,
+                       'message': ''})
 
 
 def user_settings(request):
@@ -60,8 +63,12 @@ def user_settings(request):
         password_form = PasswordChangeForm(user)
         profile_form = UserProfileForm(instance=user_profile)
 
-    return render(request, 'user_settings.html',{'password_form': password_form, 'profile_form': profile_form, 'user_profile': user_profile})
+    return render(request, 'user_settings.html',
+                  {'password_form': password_form, 'profile_form': profile_form, 'user_profile': user_profile})
 
 
 def payment_successful(request):
     return render(request, 'payment_sucessful.html')
+
+def filter_temp(req):
+    return render(req, 'filters.html')

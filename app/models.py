@@ -55,7 +55,7 @@ class Restaurant(models.Model):
     address = models.CharField(max_length=255)
     phone_number = models.CharField(max_length=15)
     website = models.URLField(blank=True, null=True)
-    type = models.CharField(choices=type_choices, default='1')
+    type = models.CharField(choices=type_choices, default='1', max_length=2)
     menus = models.ManyToManyField(MenuItem, null=True, blank=True)
 
     def __str__(self):
