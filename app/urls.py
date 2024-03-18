@@ -22,5 +22,5 @@ urlpatterns = [
     path('settings/', user_settings, name='Settings'),
     path('', sign_up, name='sign_up'),
     path('login/', login, name='login'),
-    path('payment_successful/', payment_successful, name='payment_successful')
+    path('payment_successful/', payment_successful, name='payment_successful'),
 ]
