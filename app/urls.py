@@ -16,11 +16,13 @@ Including another URLconf
 """
 from django.urls import path, include
 
-from .views import temp_review_view, user_settings, login, sign_up, payment_successful, home, ask_money
+from .views import *
 
 urlpatterns = [
     path('ratings/<int:restaurant_id>/', temp_review_view, name='ratings'),
     path('settings/', user_settings, name='Settings'),
+    path('history/', user_history,name='user_history'),
+    path('', sign_up, name='sign_up'),
     path('signup/', sign_up, name='sign_up'),
     path('home/', home, name='home'),
     path('login/', login, name='login'),
