@@ -1,14 +1,18 @@
-from .forms import ReviewForm , UserProfileForm
-from .models import Restaurant, User, Order
-from django.shortcuts import render, get_object_or_404, redirect
-from django.http import HttpResponseRedirect
-from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
 from django.contrib.auth.forms import PasswordChangeForm
-from .models import UserProfile
-from .forms import SignUpForm
+from django.contrib.auth.models import User
+from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import render
+from django.urls.base import reverse
+from paypal.standard.forms import PayPalPaymentsForm
+
 from .forms import LoginForm
+from .forms import ReviewForm, UserProfileForm
+from .forms import SignUpForm
+from .models import Restaurant
+from .models import UserProfile
+
+
 def restaurant_list(request):
     restaurants = Restaurant.objects.all()
 
@@ -40,12 +44,14 @@ def temp_review_view(request, restaurant_id):
             review.restaurant = restaurant
             review.user = user
             review.save()
-            return render(request, 'review_block.html', {'restaurant_id': restaurant_id, 'message': 'Review Submitted Successfully'})
+            return render(request, 'review_block.html',
+                          {'restaurant_id': restaurant_id, 'message': 'Review Submitted Successfully'})
     else:
-        return render(request, 'review_block.html', {'review_from': form, 'restaurant_id': restaurant_id, 'restaurant_name': restaurant.name, 'message': ''})
+        return render(request, 'review_block.html',
+                      {'review_from': form, 'restaurant_id': restaurant_id, 'restaurant_name': restaurant.name,
+                       'message': ''})
 
-
-@login_required(login_url='/accounts/login/')
+@login_required(login_url='/login/')
 def user_settings(request):
     user = 1
     user_profile = UserProfile.objects.get_or_create(user=user)[0]
@@ -61,7 +67,9 @@ def user_settings(request):
         password_form = PasswordChangeForm(user)
         profile_form = UserProfileForm(instance=user_profile)
 
-    return render(request, 'user_settings.html',{'password_form': password_form, 'profile_form': profile_form, 'user_profile': user_profile})
+    return render(request, 'user_settings.html',
+                  {'password_form': password_form, 'profile_form': profile_form, 'user_profile': user_profile})
+
 
 # Define a class to hold static order data
 class StaticOrder:
@@ -121,5 +129,29 @@ def login(request):
         form = LoginForm()
     return render(request, 'sign_in.html', {'form': form})
 
+
 def payment_successful(request):
     return render(request, 'payment_sucessful.html')
+
+
+def home(request):
+    return render(request, 'home.html')
+
+
+def ask_money(request):
+    # What you want the button to do.
+    paypal_dict = {
+        "business": "sb-pkdqf30042076@business.example.com",
+        "amount": "1.00",
+        "item_name": "SOME ITEM",
+        "invoice": "ORDER ID",
+        "notify_url": request.build_absolute_uri(reverse('paypal-ipn')),
+        "return": request.build_absolute_uri(reverse('payment_successful')),
+        # TODO: Add cancel return URL
+        "cancel_return": request.build_absolute_uri(reverse('payment_successful')),
+        "custom": "premium_plan",  # Custom command to correlate to some function later (optional)
+    }
+
+    # Create the instance.
+    form = PayPalPaymentsForm(initial=paypal_dict)
+    return render(request, "payments.html", {"form": form})
