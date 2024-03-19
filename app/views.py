@@ -140,6 +140,8 @@ def login(request):
 
 
 def payment_successful(request):
+    # TODO: Add Payer ID from URL to Database, along with the order details/User ID
+    # EX URL: http://localhost:8000/payment_successful/?PayerID=VUZ7HNUFNA8Y6
     return render(request, 'payment_successful.html')
 
 
