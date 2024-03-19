@@ -131,7 +131,11 @@ def login(request):
 
 
 def payment_successful(request):
-    return render(request, 'payment_sucessful.html')
+    return render(request, 'payment_successful.html')
+
+
+def payment_failed(request):
+    return render(request, 'payment_failed.html')
 
 
 def filter_temp(req):
@@ -143,11 +147,14 @@ def home(request):
 
 
 def ask_money(request):
-    # What you want the button to do.
+    order_details = request.POST
+    price = 15.00
+    item_name = "Manchurian"
+
     paypal_dict = {
         "business": "sb-pkdqf30042076@business.example.com",
-        "amount": "1.00",
-        "item_name": "SOME ITEM",
+        "amount": price,
+        "item_name": item_name,
         "invoice": "ORDER ID",
         "notify_url": request.build_absolute_uri(reverse('paypal-ipn')),
         "return": request.build_absolute_uri(reverse('payment_successful')),

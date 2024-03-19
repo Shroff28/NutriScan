@@ -34,7 +34,7 @@ body {
     font-style: normal;
 }
 
-.navigation i {
+.navigation i{
     font-size: 25px;
 }
 
@@ -52,10 +52,16 @@ body {
     width: 40vw;
 }
 
-.payment-image h2 {
+.payment-image .success {
     margin-bottom: 10px;
     text-align: center;
     color: #81bb81;
+}
+
+.payment-image .failure {
+    margin-bottom: 10px;
+    text-align: center;
+    color: #bf4343;
 }
 
 .filters {
