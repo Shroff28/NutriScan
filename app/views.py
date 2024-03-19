@@ -9,6 +9,7 @@ from paypal.standard.forms import PayPalPaymentsForm
 from .forms import LoginForm, FilterForm
 from .forms import ReviewForm, UserProfileForm
 from .forms import SignUpForm
+from .models import Order
 from .models import Restaurant
 from .models import UserProfile
 
@@ -51,6 +52,7 @@ def temp_review_view(request, restaurant_id):
                       {'review_from': form, 'restaurant_id': restaurant_id, 'restaurant_name': restaurant.name,
                        'message': ''})
 
+
 @login_required(login_url='/login/')
 def user_settings(request):
     user = 1
@@ -73,7 +75,7 @@ def user_settings(request):
 
 # Define a class to hold static order data
 class StaticOrder:
-    def __init__(self, order_id, restaurant_name, item_name, cuisine_price, cuisine_quantity,totalprice):
+    def __init__(self, order_id, restaurant_name, item_name, cuisine_price, cuisine_quantity, totalprice):
         self.order_id = order_id
         self.restaurant_name = restaurant_name
         self.item_name = item_name
@@ -81,16 +83,21 @@ class StaticOrder:
         self.quantity = cuisine_quantity
         self.totalprice = totalprice
 
+
 def user_history(request):
     # Get the current user
     user_id = 1
 
     # Static order data
     static_orders = [
-        StaticOrder(order_id=1, restaurant_name='Restaurant A', item_name='Italian',cuisine_price='$20',cuisine_quantity='1',totalprice='40'),
-        StaticOrder(order_id=2, restaurant_name='Restaurant B', item_name='Mexican',cuisine_price='$50',cuisine_quantity='2',totalprice='100'),
-        StaticOrder(order_id=3, restaurant_name='Restaurant C', item_name='Indian',cuisine_price='$15',cuisine_quantity='1',totalprice='15'),
-        StaticOrder(order_id=4, restaurant_name='Restaurant C', item_name='Indian', cuisine_price='$15', cuisine_quantity='1', totalprice='15'),
+        StaticOrder(order_id=1, restaurant_name='Restaurant A', item_name='Italian', cuisine_price='$20',
+                    cuisine_quantity='1', totalprice='40'),
+        StaticOrder(order_id=2, restaurant_name='Restaurant B', item_name='Mexican', cuisine_price='$50',
+                    cuisine_quantity='2', totalprice='100'),
+        StaticOrder(order_id=3, restaurant_name='Restaurant C', item_name='Indian', cuisine_price='$15',
+                    cuisine_quantity='1', totalprice='15'),
+        StaticOrder(order_id=4, restaurant_name='Restaurant C', item_name='Indian', cuisine_price='$15',
+                    cuisine_quantity='1', totalprice='15'),
         # Add more static orders as needed
     ]
 
@@ -102,10 +109,13 @@ def user_history(request):
 
     # Iterate through each order to extract restaurant name and order ID
     for order in user_orders:
-        order_details.append((order.order_id, order.restaurant_name, order.item_name,order.cuisine_price,order.quantity,order.totalprice))
+        order_details.append((order.order_id, order.restaurant_name, order.item_name, order.cuisine_price,
+                              order.quantity, order.totalprice))
 
     # Pass the order details to the template for rendering
     return render(request, 'user_history.html', {'order_details': order_details})
+
+
 def sign_up(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
@@ -115,7 +125,6 @@ def sign_up(request):
     else:
         form = SignUpForm()
     return render(request, 'sign_up.html', {'form': form})
-
 
 
 def login(request):
@@ -147,7 +156,10 @@ def home(request):
 
 
 def ask_money(request):
-    order_details = request.POST
+    # TODO: Fetch order details from the database
+    order_details = Order.objects.all().first()
+
+    # TODO: set price from order object
     price = 15.00
     item_name = "Manchurian"
 
@@ -155,11 +167,11 @@ def ask_money(request):
         "business": "sb-pkdqf30042076@business.example.com",
         "amount": price,
         "item_name": item_name,
-        "invoice": "ORDER ID",
+        "invoice": order_details.order_id,
         "notify_url": request.build_absolute_uri(reverse('paypal-ipn')),
         "return": request.build_absolute_uri(reverse('payment_successful')),
         # TODO: Add cancel return URL
-        "cancel_return": request.build_absolute_uri(reverse('payment_successful')),
+        "cancel_return": request.build_absolute_uri(reverse('payment_failed')),
         "custom": "premium_plan",  # Custom command to correlate to some function later (optional)
     }
 
