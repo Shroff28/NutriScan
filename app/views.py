@@ -225,6 +225,7 @@ class GetOneRestaurantByIdView(View):
     def get(self, request, id):
 
         restaurant_details = self.get_obj(id = id)
+        
 
         context = {
             'restaurant_details': restaurant_details
