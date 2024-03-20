@@ -10,8 +10,10 @@ from .forms import LoginForm, FilterForm
 from .forms import ReviewForm, UserProfileForm
 from .forms import SignUpForm
 from .models import Order
-from .models import Restaurant
+from .models import Restaurant, MenuItem
 from .models import UserProfile
+
+from django.views import View
 
 
 def restaurant_list(request):
@@ -180,3 +182,55 @@ def ask_money(request):
     # Create the instance.
     form = PayPalPaymentsForm(initial=paypal_dict)
     return render(request, "payments.html", {"form": form})
+
+
+
+
+class GetOneMenuByIdView(View):
+
+    def get_obj(self, id):
+    
+        try:
+            obj = MenuItem.objects.get(id = id)
+        except:
+            raise ValueError(f"Menu item not exist with id: {id}")
+        
+        return obj
+    
+
+    def get(self, request, id):
+
+        menu_item_details = self.get_obj(id = id)
+
+        context = {
+            "menu_details": menu_item_details
+        }
+
+        return render(request,"one_menu.html", context=context)
+
+
+
+class GetOneRestaurantByIdView(View):
+
+    def get_obj(self, id):
+
+        try:
+            obj = Restaurant.objects.get(id = id)
+        except:
+            raise ValueError(f"Restaurant not exist with id: {id}")
+        
+        return obj
+    
+
+    def get(self, request, id):
+
+        restaurant_details = self.get_obj(id = id)
+
+        context = {
+            'restaurant_details': restaurant_details
+        }
+
+        return render(request,"one_restaurant.html", context=context)
+        
+
+
