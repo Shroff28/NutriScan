@@ -38,3 +38,11 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ('bio', 'favorite_food', 'favorite_restaurant', 'profile_picture',)
+
+class CustomerForm(forms.ModelForm):
+    profile_picture = forms.ImageField(required=False)
+    date_of_birth = forms.DateField(label='Date of Birth')
+
+    class Meta:
+        model = Customer
+        fields = ('date_of_birth', 'contact_number', 'profile_picture')

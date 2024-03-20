@@ -29,4 +29,5 @@ urlpatterns = [
     path('paypal/', include("paypal.standard.ipn.urls")),
     path('payment_successful/', payment_successful, name='payment_successful'),
     path('payment/', ask_money, name='payment'),
+    path('accounts/', include('django.contrib.auth.urls')),
 ]

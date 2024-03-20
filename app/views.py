@@ -5,12 +5,11 @@ from django.shortcuts import get_object_or_404, redirect
 from django.shortcuts import render
 from django.urls.base import reverse
 from paypal.standard.forms import PayPalPaymentsForm
-
 from .forms import LoginForm
-from .forms import ReviewForm, UserProfileForm
+from .forms import ReviewForm, CustomerForm
 from .forms import SignUpForm
 from .models import Restaurant
-from .models import UserProfile
+from .models import Customer
 
 
 def restaurant_list(request):
@@ -51,24 +50,36 @@ def temp_review_view(request, restaurant_id):
                       {'review_from': form, 'restaurant_id': restaurant_id, 'restaurant_name': restaurant.name,
                        'message': ''})
 
-@login_required(login_url='/login/')
-def user_settings(request):
-    user = 1
-    user_profile = UserProfile.objects.get_or_create(user=user)[0]
-    if request.method == 'POST':
-        password_form = PasswordChangeForm(user, request.POST)
-        profile_form = UserProfileForm(request.POST, request.FILES, instance=user_profile)
 
-        if password_form.is_valid() and profile_form.is_valid():
+def user_settings(request):
+    if request.user.is_authenticated:
+        try:
+            customer = Customer.objects.get(user_ptr=request.user)
+        except Customer.DoesNotExist:
+            # Create a new Customer instance if it doesn't exist
+            customer = Customer.objects.create(user_ptr=request.user)
+    else:
+        # Create a temporary anonymous user for development
+        default_user = User.objects.get(username='jk94')
+        customer = Customer.objects.get_or_create(user_ptr=default_user)[0]
+
+    if request.method == 'POST':
+        password_form = PasswordChangeForm(request.user, request.POST)
+        customer_form = CustomerForm(request.POST, request.FILES, instance=customer)
+
+        if password_form.is_valid() and customer_form.is_valid():
             password_form.save()
-            profile_form.save()
+            customer_form.save()
             return redirect('user_settings')
     else:
-        password_form = PasswordChangeForm(user)
-        profile_form = UserProfileForm(instance=user_profile)
+        password_form = PasswordChangeForm(request.user)
+        customer_form = CustomerForm(instance=customer)
 
-    return render(request, 'user_settings.html',
-                  {'password_form': password_form, 'profile_form': profile_form, 'user_profile': user_profile})
+    return render(request, 'user_settings.html', {
+        'password_form': password_form,
+        'customer_form': customer_form,
+        'customer': customer,
+    })
 
 
 # Define a class to hold static order data
@@ -83,7 +94,7 @@ class StaticOrder:
 
 def user_history(request):
     # Get the current user
-    user_id = 1
+    user = User.objects.get()
 
     # Static order data
     static_orders = [
