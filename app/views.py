@@ -16,6 +16,14 @@ from .models import UserProfile
 from django.views import View
 
 
+
+# cart 
+from django.shortcuts import render, redirect
+from .models import MenuItem
+from django.contrib.auth.decorators import login_required
+from cart.cart import Cart
+
+
 def restaurant_list(request):
     restaurants = Restaurant.objects.all()
 
@@ -235,3 +243,60 @@ class GetOneRestaurantByIdView(View):
         
 
 
+
+
+
+
+def homeview(request):
+    return render(request, "home.html")
+
+# cart 
+    
+# @login_required(login_url="/users/login")
+def cart_add(request, id):
+    cart = Cart(request)
+    menu_item = MenuItem.objects.get(id=id)
+    cart.add(product=menu_item)
+    return redirect("cart_detail")
+
+
+# @login_required(login_url="/users/login")
+def item_clear(request, id):
+    cart = Cart(request)
+    menu_item = MenuItem.objects.get(id=id)
+    cart.remove(product=menu_item)
+    return redirect("cart_detail")
+
+
+# @login_required(login_url="/users/login")
+def item_increment(request, id):
+    cart = Cart(request)
+    menu_item = MenuItem.objects.get(id=id)
+    cart.add(product=menu_item)
+    return redirect("cart_detail")
+
+
+# @login_required(login_url="/users/login")
+def item_decrement(request, id):
+    cart = Cart(request)
+    menu_item = MenuItem.objects.get(id=id)
+    cart.decrement(product=menu_item)
+    return redirect("cart_detail")
+
+
+# @login_required(login_url="/users/login")
+def cart_clear(request):
+    cart = Cart(request)
+    cart.clear()
+    return redirect("cart_detail")
+
+
+# @login_required(login_url="/users/login")
+# def cart_detail(request):
+#     return render(request, 'cart/cart_detail.html')
+
+
+
+# @login_required(login_url="/users/login")
+def cart_detail(request):
+    return render(request, "cart_details.html")
