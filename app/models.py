@@ -41,7 +41,6 @@ class Customer(User):
         return self.username
 
 
-
 class Category(models.Model):
     name = models.CharField(max_length=100)
 
@@ -49,20 +48,17 @@ class Category(models.Model):
         return self.name
 
 
-
 class MenuItem(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField()
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    review = models.ForeignKey("Review", on_delete = models.CASCADE, blank=True, null=True)
+    review = models.ForeignKey("Review", on_delete=models.CASCADE, blank=True, null=True)
 
     image = models.ImageField(upload_to='media/products/')
     price = models.FloatField()
 
-
     def __str__(self):
         return self.name
-    
 
 
 class Restaurant(models.Model):

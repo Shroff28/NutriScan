@@ -55,25 +55,25 @@
 
 <body>
 
-    <div class="container">
-        <div class="row mt-5">
-            <div class="col-md-6">
-                <!-- Restaurant Image -->
-                <img src="restaurant_image.jpg" class="img-fluid" alt="Restaurant Image">
-            </div>
-            <div class="col-md-6">
-                <!-- Restaurant Details -->
-                <h1>{{restaurant_details.name}}</h1>
-                <p><strong>Phone:</strong> {{restaurant_details.phone_number}}</p>
-                <p><strong>Website:</strong> <a href="{{restaurant_details.website}}">{{restaurant_details.website}}</a>
-                </p>
-            </div>
+<div class="container">
+    <div class="row mt-5">
+        <div class="col-md-6">
+            <!-- Restaurant Image -->
+            <img src="restaurant_image.jpg" class="img-fluid" alt="Restaurant Image">
         </div>
-        <div class="row mt-5">
-            <div class="col-md-12">
-                <!-- Menu Items -->
-                <h2>Menu Items</h2>
-                {% for menu in restaurant_details.menus.all %}
+        <div class="col-md-6">
+            <!-- Restaurant Details -->
+            <h1>{{ restaurant_details.name }}</h1>
+            <p><strong>Phone:</strong> {{ restaurant_details.phone_number }}</p>
+            <p><strong>Website:</strong> <a href="{{ restaurant_details.website }}">{{ restaurant_details.website }}</a>
+            </p>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-md-12">
+            <!-- Menu Items -->
+            <h2>Menu Items</h2>
+            {% for menu in restaurant_details.menus.all %}
                 <a href="{% url 'get_one_menu' id=menu.id %}">
                     <div class="menu-item row mb-3 p-3">
                         <!-- Menu Item Details -->
@@ -92,10 +92,10 @@
                         </div>
                     </div>
                 </a>
-                {% endfor %}
-            </div>
+            {% endfor %}
         </div>
     </div>
+</div>
 
 </body>
 

@@ -34,7 +34,7 @@ body {
     font-style: normal;
 }
 
-.navigation i{
+.navigation i {
     font-size: 25px;
 }
 
@@ -134,7 +134,7 @@ body {
 /* Styling for order blocks */
 .order-block {
     position: relative;
-    display:inline-block;
+    display: inline-block;
     justify-content: space-between;
     margin-right: 20px;
     width: 400px;

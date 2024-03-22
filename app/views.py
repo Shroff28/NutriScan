@@ -1,27 +1,21 @@
+from cart.cart import Cart
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.models import User
-from django.shortcuts import get_object_or_404, redirect
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404
+# cart
+from django.shortcuts import render, redirect
 from django.urls.base import reverse
+from django.views import View
 from paypal.standard.forms import PayPalPaymentsForm
 
 from .forms import LoginForm, FilterForm
 from .forms import ReviewForm, UserProfileForm
 from .forms import SignUpForm
-from .models import Order
-from .models import Restaurant, MenuItem
-from .models import UserProfile
-
-from django.views import View
-
-
-
-# cart 
-from django.shortcuts import render, redirect
 from .models import MenuItem
-from django.contrib.auth.decorators import login_required
-from cart.cart import Cart
+from .models import Order
+from .models import Restaurant
+from .models import UserProfile
 
 
 def restaurant_list(request):
@@ -192,30 +186,26 @@ def ask_money(request):
     return render(request, "payments.html", {"form": form})
 
 
-
-
 class GetOneMenuByIdView(View):
 
     def get_obj(self, id):
-    
+
         try:
-            obj = MenuItem.objects.get(id = id)
+            obj = MenuItem.objects.get(id=id)
         except:
             raise ValueError(f"Menu item not exist with id: {id}")
-        
+
         return obj
-    
 
     def get(self, request, id):
 
-        menu_item_details = self.get_obj(id = id)
+        menu_item_details = self.get_obj(id=id)
 
         context = {
             "menu_details": menu_item_details
         }
 
-        return render(request,"one_menu.html", context=context)
-
+        return render(request, "one_menu.html", context=context)
 
 
 class GetOneRestaurantByIdView(View):
@@ -223,35 +213,29 @@ class GetOneRestaurantByIdView(View):
     def get_obj(self, id):
 
         try:
-            obj = Restaurant.objects.get(id = id)
+            obj = Restaurant.objects.get(id=id)
         except:
             raise ValueError(f"Restaurant not exist with id: {id}")
-        
+
         return obj
-    
 
     def get(self, request, id):
 
-        restaurant_details = self.get_obj(id = id)
-        
+        restaurant_details = self.get_obj(id=id)
 
         context = {
             'restaurant_details': restaurant_details
         }
 
-        return render(request,"one_restaurant.html", context=context)
-        
-
-
-
-
+        return render(request, "one_restaurant.html", context=context)
 
 
 def homeview(request):
     return render(request, "home.html")
 
-# cart 
-    
+
+# cart
+
 # @login_required(login_url="/users/login")
 def cart_add(request, id):
     cart = Cart(request)
@@ -294,7 +278,6 @@ def cart_clear(request):
 # @login_required(login_url="/users/login")
 # def cart_detail(request):
 #     return render(request, 'cart/cart_detail.html')
-
 
 
 # @login_required(login_url="/users/login")
