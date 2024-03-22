@@ -1,7 +1,6 @@
 from django import forms
 
-from app.models import Review
-from app.models import UserProfile, Restaurant, Customer
+from app.models import *
 
 
 class ReviewForm(forms.ModelForm):
@@ -62,3 +61,12 @@ class FilterForm(forms.Form):
     ratings_choice = [('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')]
     Ratings = forms.ChoiceField(
         widget=forms.NumberInput(attrs={'type': 'range', 'class': 'form-range', 'min': '1', 'max': '5'}))
+
+
+class CustomerForm(forms.ModelForm):
+    profile_picture = forms.ImageField(required=False)
+    date_of_birth = forms.DateField(label='Date of Birth')
+
+    class Meta:
+        model = Customer
+        fields = ('date_of_birth', 'contact_number', 'profile_picture')
