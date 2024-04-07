@@ -1,0 +1,11 @@
+django
+djangorestframework
+transformers
+huggingface_hub 
+torch 
+torchvision
+torchaudio
+python-dotenv
+psycopg2
+pandas
+openpyxl

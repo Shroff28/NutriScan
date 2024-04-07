@@ -1,0 +1,71 @@
+body {
+  font-family: verdana;
+  background-color: #fcf0e2;
+  margin: 0px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: hidden;
+}
+
+.myheader {
+  display: flex;
+  justify-content: space-between;
+  color: brown;
+  font-size: 20px; 
+}
+
+.myheader p {
+margin-top: 0;
+cursor: pointer;
+}
+
+.content {
+  flex: 1;
+  text-align: center;
+  padding: 20px;
+}
+
+#nutriscan {
+  font-size: 60px;
+  margin: 0px;
+  padding-top: 50px;
+}
+
+#fit {
+  font-size: 25px;
+  margin-bottom: 0px;
+}
+
+.button {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+#food,
+#diet {
+  background-color: brown;
+  margin: 10px;
+  padding: 10px 60px;
+  border-radius: 30px;
+  font-size: 20px;
+}
+
+.responsive {
+  width: 100%;
+  height: auto;
+  border-radius: 30px;
+  margin: 0px;
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .content,
+  .responsive {
+    flex: none;
+    width: 100%;
+  }
+}

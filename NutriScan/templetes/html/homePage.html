@@ -1,0 +1,115 @@
+
+
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      font-family: verdana;
+      margin: 0;
+      background-color: #fcf0e2;
+    }
+
+    .navbar {
+      background-color: rgba(0, 0, 0, 0.1); /* Background color for the navbar */
+      overflow: hidden;
+      position : fixed;
+      width: 100%;
+      top: 0;
+    }
+
+    .nav-item {
+      float: left;
+      display: block;
+      color: black;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+    }
+
+    .nav-item:hover {
+      background-color: rgb(237, 99, 22); /* Background color on hover */
+      color: white;
+    }
+
+    .content {
+      text-align: center;
+      padding: 20px;
+    }
+
+    #nutriscan {
+      font-size: 60px;
+      margin: 0px;
+      padding-top: 50px;
+    }
+
+    #fit {
+      font-size: 25px;
+      margin-bottom: 0px;
+    }
+
+    .button {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+    }
+
+    #food {
+      background-color: rgb(237, 99, 22);
+      margin: 10px;
+      padding: 10px 60px;
+      border-radius: 30px;
+      font-size: 20px;
+      border: none;
+      color: black;
+      cursor: pointer;
+    }
+
+    #food:hover {
+      background-color: #854d00; /* Darker background color on hover */
+    }
+
+    .responsive {
+      width: 100%;
+      height: auto;
+      border-radius: 30px;
+      margin: 0px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="navbar">
+    <a class="nav-item" onclick="redirectToProfile()">Profile</a>
+    <a class="nav-item" onclick="redirectToMealHistory()">Meal History</a>
+    <a class="nav-item" onclick="logout()">Logout</a>
+  </div>
+  <div class="content">
+    <p id="nutriscan">Nutriscan</p>
+    <p id="fit">One stop for all your fitness and diet needs!!!</p>
+    <div class="button">
+      <button id="food" type="submit">Know your food</button>
+    </div>
+  </div>
+  <img src="{% static '/images/img_nature.png' %}" alt="Nature" class="responsive" width="600" height="400">
+  <script>
+    document.getElementById("food").addEventListener("click", function () {
+      window.location.href = "/imageUpload/";
+    });
+    function redirectToProfile() {
+      window.location.href = "/profile/";
+    }
+    function redirectToMealHistory() {
+      window.location.href = "/meal-history/";
+    }
+    function logout(){
+      window.location.href = "/logout/";
+    }
+  </script>
+</body>
+
+</html>

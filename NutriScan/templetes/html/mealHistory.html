@@ -1,0 +1,118 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Meal History</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/mealHistory.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #fcf0e2;
+        margin: 0;
+        padding: 0;
+        
+    }
+    .navbar {
+        background-color: rgba(0, 0, 0, 0.1); /* Background color for the navbar */
+        overflow: hidden;
+        position : fixed;
+        width: 100%;
+        top: 0;
+      }
+      
+      .nav-item {
+        display: inline-block; /* Change from float to inline-block */
+        color: black;
+        text-align: center;
+        padding: 14px 16px; /* Adjusted padding */
+        text-decoration: none;
+        margin: 0; /* Remove default margin */
+    }
+      
+  
+      .nav-item:hover {
+        background-color: rgb(237, 99, 22); /* Background color on hover */
+        color: white;
+      }
+ 
+</style>
+<body>
+    <div class="navbar">
+        <a class="nav-item" onclick="redirectTohomePage()">Homepage</a>
+        <a class="nav-item" onclick="redirectToProfile()">Profile</a>
+       <a class="nav-item" onclick="logout()">Logout</a>
+      </div>
+    <div class="parent">
+        <div class="chart-container">
+            <h2>Recipe Calorie Chart</h2>
+            <h3>The chart displays data for the past seven days exclusively.</h3>
+            <canvas id="myChart" width="400" height="400"></canvas>
+        </div>
+
+        <div class="additional-info">
+            <h2>Other Recipe Details</h2>
+            <table class="recipe-table">
+                <thead>
+                    <tr>
+                        <th>Recipe</th>
+                        <th>Calories</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for recipe in top_recipes|slice:"10:" %}
+                    <tr>
+                        <td>{{ recipe.recipe_name }}</td>
+                        <td>{{ recipe.total_calories }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    </div>
+
+    <script>
+        var data = JSON.parse('{{ top_recipes_json|escapejs }}');
+        var recipeNames = data.slice(0, 10).map(item => item.recipe_name);
+        var calories = data.slice(0, 10).map(item => item.total_calories);
+
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: recipeNames,
+                datasets: [{
+                    label: 'Total Calories',
+                    data: calories,
+                    backgroundColor: 'rgba(0, 123, 255, 0.5)',
+                    borderColor: 'rgba(0, 123, 255, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+        function redirectToProfile() {
+      window.location.href = "/profile/";
+    }
+    function logout(){
+      window.location.href = "/logout/";
+    }
+
+    function redirectTohomePage() {
+        window.location.href = "/homePage/";
+    }
+    </script>
+</body>
+
+</html>

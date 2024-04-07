@@ -1,0 +1,93 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+  <title>Sign up</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/signup.css' %}">
+  <script>
+    function showSuccessPopup() {
+      alert("Account created successfully!");
+      window.location.href = "{% url 'loginPage' %}";  // Replace 'loginPage' with your login URL name
+    }
+  </script>
+</head>
+
+<!-- <body>
+  <div class="row">
+    <div class="left">
+      <img src="{% static '/images/healthy-food-vs-unhealthy-food 1.png' %}" />
+    </div>
+
+    <div class="right">
+      <p id="myheader">Nutriscan</p>
+      {% if messages %}
+        <ul class="messages">
+          {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+      <form action="/signup/" method="post" onsubmit="showSuccessPopup()">
+        {% csrf_token %}
+        Sign up
+        <label for="fname">First name</label><br>
+        <input type="text" name="fname"><br><br>
+        <label for="lname">Last name</label><br>
+        <input type="text" name="lname"> <br> <br>
+        <label for="email">Email</label><br>
+        <input type="text" name="email"><br><br>
+        <label for="psw">Password</label><br>
+        <input type="password" name="psw"><br><br>
+        <label for="cpsw">Confirm password</label><br>
+        <input type="password" name="cpsw"><br><br>
+        <button type="submit">Register</button>
+        <p>Already have an account? <a href="#">Sign in</a></p>
+      </form>
+    </div>
+  </div>
+</body> -->
+
+
+<body>
+  <div class="row">
+    <div class="left">
+      <img src="{% static '/images/healthy-food-vs-unhealthy-food 1.png' %}" />
+    </div>
+
+    <div class="right">
+      <span id="myheader" style="font-size:250%;">Nutriscan</span>
+      {% if messages %}
+        <ul class="messages">
+          {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+      <form action="/signup/" method="post" onsubmit="showSuccessPopup()">
+        {% csrf_token %}
+        <p class="signup" style="font-size:250%;;">Sign up</p>
+        <div class="la">
+          <label for="fname">First name</label><br>
+          <input type="text" name="fname"><br><br>
+          <label for="lname">Last name</label><br>
+          <input type="text" name="lname"> <br> <br>
+          <label for="email">Email</label><br>
+          <input type="text" name="email"><br><br>
+          <label for="psw">Password</label><br>
+          <input type="password" name="psw"><br><br>
+          <label for="cpsw">Confirm password</label><br>
+          <input type="password" name="cpsw"><br><br>
+        </div>
+        <div class="formFooter">
+          <button type="submit">Register</button>
+          <p>Already have an account? <a href="#">Login</a></p>
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
+
+</html>

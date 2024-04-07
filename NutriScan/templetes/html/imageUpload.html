@@ -1,0 +1,146 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/imageUpload.css' %}">
+</head>
+<style>
+
+  body {
+    font-family: verdana;
+    background-color: #fcf0e2;
+    margin: 0;
+    padding: 0;
+  }
+
+  .navbar {
+    background-color: rgba(0, 0, 0, 0.1); /* Background color for the navbar */
+    overflow: hidden;
+    position : fixed;
+    width: 100%;
+    top: 0;
+  }
+
+  .nav-item {
+    float: left;
+    display: block;
+    color: black;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+  }
+
+  .nav-item:hover {
+    background-color: rgb(237, 99, 22); /* Background color on hover */
+    color: white;
+  }
+  
+</style>
+<body>
+  <div class="navbar">
+    <a class="nav-item" onclick="redirectToProfile()">Profile</a>
+    <a class="nav-item" onclick="redirectToMealHistory()">Meal History</a>
+    <a class="nav-item" onclick="logout()">Logout</a>
+  </div>
+  <div class="content">
+    <form id="image-upload-form" method="post" enctype="multipart/form-data" action="/imageUpload/">
+      {% csrf_token %}
+      <input type="hidden" name="user_id" value="{{ user.id }}">
+      <div class="image-upload-view">
+        <div id="upload-btn-wrapper">
+          <button class="btn">Upload an image</button>
+          <input type="file" name="image" id="image" accept="image/*" />
+        </div>
+        <div id="uploaded-image"></div>
+      </div>
+      <button type="submit">Submit</button>
+    </form>
+    <div id="predicted-label" style="display: none;">
+      <div class="message">
+        <p>Dish Name and Nutrition Information</p>
+        <table>
+          <thead>
+            <tr>
+              <th>Label</th>
+              <th>Value</th>
+            </tr>
+          </thead>
+          <tbody id="nutrition-info-body"></tbody>
+        </table>
+        <img id="predicted-image" src="" alt="">
+      </div>
+    </div>
+
+    <script>
+      document.getElementById('image-upload-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        var formData = new FormData(this);
+    
+        fetch(this.action, {
+            method: 'POST',
+            body: formData,
+          })
+          .then(response => response.json())
+          .then(data => {
+            // Update the DOM with the received JSON data
+            var nutritionInfoBody = document.getElementById('nutrition-info-body');
+            nutritionInfoBody.innerHTML = '';
+            for (var key in data.predicted_label) {
+              if (data.predicted_label.hasOwnProperty(key)) {
+                var tr = document.createElement('tr');
+                tr.innerHTML = '<td>' + key + '</td><td>' + data.predicted_label[key] + '</td>';
+                nutritionInfoBody.appendChild(tr);
+              }
+            }
+    
+            var predictedImage = document.getElementById('predicted-image');
+            predictedImage.src = data.image_url;
+    
+            // Display the predicted label and image
+            document.getElementById('predicted-label').style.display = 'block';
+          })
+          .catch(error => {
+            console.error('Error:', error);
+          });
+      });
+    
+      document.getElementById('image').addEventListener('change', function() {
+        var input = this;
+        var imageContainer = document.getElementById('uploaded-image');
+        imageContainer.innerHTML = '';
+    
+        // Clear the table details
+        var nutritionInfoBody = document.getElementById('nutrition-info-body');
+        nutritionInfoBody.innerHTML = '';
+    
+        if (input.files && input.files[0]) {
+          var reader = new FileReader();
+    
+          reader.onload = function(e) {
+            var img = document.createElement('img');
+            img.src = e.target.result;
+            img.alt = 'Uploaded Image';
+            imageContainer.appendChild(img);
+          };
+    
+          reader.readAsDataURL(input.files[0]);
+        }
+      });
+
+      function redirectToProfile() {
+        window.location.href = "/profile/";
+      }
+      function redirectToMealHistory() {
+        window.location.href = "/meal-history/";
+      }
+      function logout(){
+        window.location.href = "/logout/";
+      }
+    </script>
+  </div>
+</body>
+
+</html>

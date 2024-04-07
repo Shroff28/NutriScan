@@ -1,0 +1,73 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Login Page</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
+  <script>
+    function isTokenPresent() {
+      var tokenPresent = false;
+      return tokenPresent;
+    }
+    function handleTokenElements() {
+      var loginForm = document.getElementById('login-form');
+      var logoutButton = document.getElementById('logout-button');
+
+      if (isTokenPresent()) {
+        
+        loginForm.style.display = 'none';
+        logoutButton.style.display = 'block';
+      } else {
+        loginForm.style.display = 'block';
+        logoutButton.style.display = 'none';
+      }
+    }
+  </script>
+</head>
+
+<body onload="handleTokenElements();">
+  <div class="container">
+    {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}
+      <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <div class="login-content">
+      <div class="header">
+        <span style="font-size:250%;">Nutriscan</span>   
+      </div>
+      <form action="/" method="post" id="login-form">
+        {% csrf_token %}
+        <div class="la">
+          <label for="email">Email</label><br>
+          <input type="text" id="email" name="email"><br><br>
+          <label for="psw">Password</label><br>
+          <input type="password" id="psw" name="psw"><br><br>
+        </div>
+        <label>
+          <input type="checkbox" name="remember" style="margin-bottom:10px"> Remember me
+        </label>      
+        <button type="submit" class="signinbtn">Continue</button>
+        <p style="margin: 40px;">Don't have an account?
+          <a href="/signup/" style="color:blue;">Sign up</a> here
+        </p>
+      </form>
+      <button id="logout-button" style="display: none;" onclick="logout()">Logout</button>
+    </div>
+    <div class="image">
+      <img src="{% static 'images/loginpage.png' %}" />
+    </div>
+  </div>
+
+  <script>
+    function logout() {
+      console.log('Logout clicked');
+    }
+  </script>
+</body>
+</html>
